@@ -42,6 +42,12 @@ module "ecr" {
   project_name = module.vpc.project_name
 }
 
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
+  project_name = module.vpc.project_name
+  retention_in_days = var.retention_in_days
+}
+
 module "ecs" {
   source                       = "./modules/ecs"
   project_name                 = module.vpc.project_name
@@ -51,4 +57,7 @@ module "ecs" {
   public_subnet_az2_id         = module.vpc.public_subnet_az2_id
   alb_security_group_id        = module.security_group.alb_security_group_id
   alb_target_group_arn         = module.alb.alb_target_group_arn
+  log_group_name               = module.cloudwatch.log_group_name 
+  log_group_arn                = module.cloudwatch.log_group_arn
+  region                       = module.vpc.region 
 }
