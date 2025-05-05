@@ -1,19 +1,13 @@
 name: Destroy AWS Infrastructure
 
 on:
-  workflow_dispatch:
-    inputs:
-      confirm_destroy:
-        description: "Type 'yes' to confirm destroy"
-        required: true
-        default: "no"
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
 
 env:
   AWS_REGION: us-east-2
 
 jobs:
   destroy:
-    if: ${{ github.event.inputs.confirm_destroy == 'yes' }}
     runs-on: ubuntu-latest
 
     steps:
